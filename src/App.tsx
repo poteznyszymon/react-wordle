@@ -14,7 +14,6 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [gameEnded, setGameEnded] = useState(false);
 
-
   function handleCurrentGuess(letter: string) {
     if (currentGuess.length > 0 && letter === "BACK" && !gameEnded) {
       setCurrentGuess((prev) => prev.slice(0, -1));
@@ -29,7 +28,7 @@ function App() {
     }
     if (letter === "ENTER" && moves < 6 && currentGuess.length === 5) {
       if (currentGuess === correctWord.toUpperCase()) {
-        toast.success("you won!");
+        toast.success("You won!");
         setGameEnded(true);
       }
       if (isWordValid(currentGuess)) {
@@ -42,7 +41,6 @@ function App() {
           const newMoves = prev + 1;
           if (newMoves >= 6) {
             setGameEnded(true);
-            toast.remove
             toast.error(`Game over, correct word was ${correctWord}`);
           }
           return newMoves;
@@ -59,10 +57,10 @@ function App() {
     if (key.length === 1 && key >= "A" && key <= "Z") {
       handleCurrentGuess(key);
     }
-    if (key == "BACKSPACE") {
+    if (key === "BACKSPACE") {
       handleCurrentGuess("BACK");
     }
-    if (key == "ENTER") {
+    if (key === "ENTER") {
       handleCurrentGuess("ENTER");
     }
   }
@@ -89,7 +87,7 @@ function App() {
         currentMove={moves}
         correctWord={correctWord.toUpperCase()}
       />
-      <Keyboard handleClick={handleCurrentGuess} />
+      <Keyboard guesses={guesses} correctWord={correctWord.toUpperCase()} handleClick={handleCurrentGuess} />
       <Footer />
     </div>
   );
